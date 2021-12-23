@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +28,18 @@ public class VehicleController {
 
     /**
      * Get to return all vehicles available inside the databas
-     *http://localhost:8080/hirewheels/v1/vehicles
-     *
+     * http://localhost:8081/hirewheels/v1/vehicles
      */
     @GetMapping(value = "/vehicles", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getVehicles() {
         List<Vehicle> vehicleList = vehicleService.getAllVehicles();
         List<VehicleDTO> vehicleDTOList = new ArrayList<>();
 
-        for(Vehicle vehicle : vehicleList){
+        for (Vehicle vehicle : vehicleList) {
             vehicleDTOList.add(modelMapper.map(vehicle, VehicleDTO.class));
         }
 
-        return new ResponseEntity(vehicleDTOList , HttpStatus.OK);
+        return new ResponseEntity(vehicleDTOList, HttpStatus.OK);
     }
 }
+
