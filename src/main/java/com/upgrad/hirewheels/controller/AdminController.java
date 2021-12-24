@@ -31,4 +31,17 @@ public class AdminController {
         VehicleDTO savedVehicleDTO = modelMapper.map(savedVehicle, VehicleDTO.class);
         return new ResponseEntity(savedVehicleDTO , HttpStatus.ACCEPTED);
     }
+
+    /**
+     * PUT updates the availability status of vehicle with ID passed inside the database
+     *http://localhost:8081/hirewheels/v1/vehicles/id
+     *
+     */
+    @PutMapping(value = "/vehicles/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity UpdateVehicle(@PathVariable(name = "id") int id , @RequestBody VehicleDTO vehicleDTO){
+        Vehicle vehicle = modelMapper.map(vehicleDTO , Vehicle.class);
+        Vehicle updatedVehicle = adminService.changeAvailability(id , vehicleDTO.getAvailabilityStatus());
+        VehicleDTO updatedVehicleDTO = modelMapper.map(updatedVehicle ,VehicleDTO.class);
+        return new ResponseEntity(updatedVehicleDTO , HttpStatus.OK);
+    }
 }
